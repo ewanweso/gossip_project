@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>One gossip</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div class="jumbotron">
+      <h1 class="display-4">Gossip</h1>
+      <p class="lead">Voici la page du potin n°<%= params['id'] %>.</p>
+    </div>
+
+    <main class="m-5">
+      <p>
+        Son auteur : <%= gossip.author %><br/>
+        Le contenu du potin : <%= gossip.content %>
+      </p>
+      <a href="/" class="btn btn-primary">Retour</a> 
+      <a href="/gossips/<%= params['id'] %>/edit/" class="btn btn-primary">Edit</a>
+
+      <br><br><br>
+
+      <% if comments == [] %>
+        <!-- on check s'il y a au moins un commentaire pour ce gossip -->
+        <p><i>Pas encore de commentaires pour ce potin.</i></p>
+      <% else %>
+        <h3>Commentaires</h3>
+        <% comments.each do |comment| %>
+          <p>
+            <%= comment.comment_author %><br/>
+            <%= comment.comment_content %><br/>
+          </p>
+        <% end %>
+      <% end %>
+
+      <p>Fais toi plaisir, commente ce potin :</p>
+      <form action='/gossips/<%= params['id'] %>/comment' method='POST'>
+        <div class="form-group row">
+          <label class="col-sm-2">Ton nom :</label>
+          <input type="text" class="form-control col-sm-6" name='comment_author' placeholder="Entre ton nom">
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2">Ton commentaire :</label>
+          <input type="text" class="form-control col-sm-6" name='comment_content' placeholder="Entre ton commentaire">
+        </div>
+        <button type="submit" class="btn btn-dark">Commenter</button>
+      </form>
+    </main>
+  </body>
+</html>
